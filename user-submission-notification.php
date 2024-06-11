@@ -74,6 +74,7 @@ function mostrar_formulario_envio() {  //Esta función genera y maneja un formul
                 return '<p>¡Gracias por tu envío!</p>';
             }
         }
+        ob_start();
         ?>
         <!--Si el formulario no ha sido enviado, se muestra el formulario HTML.-->
         <!--El formulario utiliza el método post para enviar los datos al servidor.-->
@@ -95,6 +96,7 @@ function mostrar_formulario_envio() {  //Esta función genera y maneja un formul
             </form>
         </div>
         <?php
+        return ob_get_clean();
     } else {
         return '<p>Debes iniciar sesión para enviar un contenido.</p>';  //Si el usuario no está autenticado, se muestra un mensaje indicándole que debe iniciar sesión
     }
