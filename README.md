@@ -213,7 +213,7 @@ function mostrar_mensaje_gracias() {
     $mensaje = get_option('envio_gracias_mensaje', '¡Gracias por tu envío!');
     return '<p>' . esc_html($mensaje) . '</p>';
 }
-
+```
 ## Adicionar estos estilo CSS para mejorar visualmente
 
 ```css
