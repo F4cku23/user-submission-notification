@@ -71,29 +71,32 @@ function mostrar_formulario_envio() {  //Esta función genera y maneja un formul
                 $admin_email = get_option('envio_admin_email', get_option('admin_email'));
                 $mensaje = "Nuevo envío recibido:\n\nTítulo: $titulo\n\nContenido: $contenido\n\nEmail: $email";
                 wp_mail($admin_email, 'Nuevo Envío Recibido', $mensaje);
-                echo '<p>¡Gracias por tu envío!</p>';
+                return '<p>¡Gracias por tu envío!</p>';
             }
         }
         ?>
         <!--Si el formulario no ha sido enviado, se muestra el formulario HTML.-->
-        <form method="post">  <!--El formulario utiliza el método post para enviar los datos al servidor.-->
-            <div class="row">
-                <label for="envio_titulo">Título:</label>
-                <input type="text" id="envio_titulo" name="envio_titulo" required><br>
-            </div>
-            <div class="row">
-                <label for="envio_contenido">Contenido:</label>
-                <textarea id="envio_contenido" name="envio_contenido" required></textarea><br>
-            </div>
-            <div class="row">
-                <label for="envio_email">Correo electrónico:</label>
-                <input type="email" id="envio_email" name="envio_email" required><br>
-            </div>
-            <input type="submit" value="Enviar">
-        </form>
+        <!--El formulario utiliza el método post para enviar los datos al servidor.-->
+        <div class="card">
+            <form method="post">
+                <div class="form-group row">
+                    <label for="envio_titulo">Título</label>
+                    <input type="text" id="envio_titulo" name="envio_titulo" placeholder="Ingresa el título" required>
+                </div>
+                <div class="form-group row">
+                    <label for="envio_contenido">Descripción</label>
+                    <textarea id="envio_contenido" name="envio_contenido" rows="4" placeholder="Ingresa la descripción" required></textarea>
+                </div>
+                <div class="form-group row">
+                    <label for="envio_email">Correo Electrónico</label>
+                    <input type="email" id="envio_email" name="envio_email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
         <?php
     } else {
-        echo '<p>Debes iniciar sesión para enviar un contenido.</p>';  //Si el usuario no está autenticado, se muestra un mensaje indicándole que debe iniciar sesión
+        return '<p>Debes iniciar sesión para enviar un contenido.</p>';  //Si el usuario no está autenticado, se muestra un mensaje indicándole que debe iniciar sesión
     }
 }
 //El siguiente código registra un shortcode para la función mostrar_formulario_envio
@@ -165,16 +168,16 @@ add_action('admin_init', 'registrar_ajustes_envio');
 //Funciones de callback para mostrar los campos, mostrarán los campos en la página de ajustes
 function campo_envio_admin_email() {
     $email = get_option('envio_admin_email', get_option('admin_email'));  //Esta función obtiene el valor de la opción envio_admin_email desde la base de datos de WordPress. Si la opción no existe, devuelve el valor predeterminado, que en este caso es el correo electrónico del administrador del sitio obtenido con get_option('admin_email')
-    echo '<input type="email" name="envio_admin_email" value="' . esc_attr($email) . '" class="regular-text">';  //esc_attr es una función de WordPress que asegura que el valor se escape correctamente para evitar vulnerabilidades XSS.
+    return '<input type="email" name="envio_admin_email" value="' . esc_attr($email) . '" class="regular-text">';  //esc_attr es una función de WordPress que asegura que el valor se escape correctamente para evitar vulnerabilidades XSS.
 }
 
 function campo_envio_gracias_mensaje() {
     $mensaje = get_option('envio_gracias_mensaje', '¡Gracias por tu envío!');
-    echo '<textarea name="envio_gracias_mensaje" class="large-text" rows="3">' . esc_textarea($mensaje) . '</textarea>';
+    return '<textarea name="envio_gracias_mensaje" class="large-text" rows="3">' . esc_textarea($mensaje) . '</textarea>';
 }
 
 // Mostrar mensaje de agradecimiento personalizado
 function mostrar_mensaje_gracias() {
     $mensaje = get_option('envio_gracias_mensaje', '¡Gracias por tu envío!');
-    echo '<p>' . esc_html($mensaje) . '</p>';
+    return '<p>' . esc_html($mensaje) . '</p>';
 }
