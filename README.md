@@ -1,3 +1,5 @@
+## Desarrollado por [@F4cku23](https://github.com/F4cku23/)
+
 # User Submission and Notification Plugin
 
 Documentación utilizada ----->
@@ -96,28 +98,32 @@ function mostrar_formulario_envio() {
                 $admin_email = get_option('envio_admin_email', get_option('admin_email'));
                 $mensaje = "Nuevo envío recibido:\n\nTítulo: $titulo\n\nContenido: $contenido\n\nEmail: $email";
                 wp_mail($admin_email, 'Nuevo Envío Recibido', $mensaje);
-                echo '<p>¡Gracias por tu envío!</p>';
+                return '<p>¡Gracias por tu envío!</p>';
             }
         }
+        ob_start();
         ?>
-        <form method="post">
-            <div class="row">
-                <label for="envio_titulo">Título:</label>
-                <input type="text" id="envio_titulo" name="envio_titulo" required><br>
-            </div>
-            <div class="row">
-                <label for="envio_contenido">Contenido:</label>
-                <textarea id="envio_contenido" name="envio_contenido" required></textarea><br>
-            </div>
-            <div class="row">
-                <label for="envio_email">Correo electrónico:</label>
-                <input type="email" id="envio_email" name="envio_email" required><br>
-            </div>
-            <input type="submit" value="Enviar">
-        </form>
+        <div class="card">
+            <form method="post">
+                <div class="form-group row">
+                    <label for="envio_titulo">Título</label>
+                    <input type="text" id="envio_titulo" name="envio_titulo" placeholder="Ingresa el título" required>
+                </div>
+                <div class="form-group row">
+                    <label for="envio_contenido">Descripción</label>
+                    <textarea id="envio_contenido" name="envio_contenido" rows="4" placeholder="Ingresa la descripción" required></textarea>
+                </div>
+                <div class="form-group row">
+                    <label for="envio_email">Correo Electrónico</label>
+                    <input type="email" id="envio_email" name="envio_email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
         <?php
+        return ob_get_clean();
     } else {
-        echo '<p>Debes iniciar sesión para enviar un contenido.</p>';
+        return '<p>Debes iniciar sesión para enviar un contenido.</p>';
     }
 }
 add_shortcode('formulario_envio', 'mostrar_formulario_envio');
@@ -191,12 +197,12 @@ add_action('admin_init', 'registrar_ajustes_envio');
 ```php
 function campo_envio_admin_email() {
     $email = get_option('envio_admin_email', get_option('admin_email'));
-    echo '<input type="email" name="envio_admin_email" value="' . esc_attr($email) . '" class="regular-text">';
+    return '<input type="email" name="envio_admin_email" value="' . esc_attr($email) . '" class="regular-text">';
 }
 
 function campo_envio_gracias_mensaje() {
     $mensaje = get_option('envio_gracias_mensaje', '¡Gracias por tu envío!');
-    echo '<textarea name="envio_gracias_mensaje" class="large-text" rows="3">' . esc_textarea($mensaje) . '</textarea>';
+    return '<textarea name="envio_gracias_mensaje" class="large-text" rows="3">' . esc_textarea($mensaje) . '</textarea>';
 }
 ```
 
@@ -205,5 +211,67 @@ function campo_envio_gracias_mensaje() {
 ```php
 function mostrar_mensaje_gracias() {
     $mensaje = get_option('envio_gracias_mensaje', '¡Gracias por tu envío!');
-    echo '<p>' . esc_html($mensaje) . '</p>';
+    return '<p>' . esc_html($mensaje) . '</p>';
 }
+
+## Adicionar estos estilo CSS para mejorar visualmente
+
+```css
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+```
