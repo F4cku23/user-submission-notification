@@ -1,8 +1,5 @@
 ## Desarrollado por [@F4cku23](https://f4cku23.github.io)
 
-![form_1](https://github.com/F4cku23/user-submission-notification/assets/28580543/ff4349e1-0b56-4397-86af-087ad8d85a4f)
-
-
 # User Submission and Notification Plugin
 
 Documentación utilizada ----->
@@ -12,6 +9,8 @@ https://developer.wordpress.org/plugins/intro/
 ## Descripción
 
 Este plugin permite a los usuarios enviar contenido desde el front-end del sitio web y notifica al administrador cuando se recibe una nueva entrada. Incluye un tipo de contenido personalizado llamado "Envío" y una página de ajustes en el área de administración donde se puede configurar el correo electrónico de notificación y el mensaje de agradecimiento.
+
+![form_1](https://github.com/F4cku23/user-submission-notification/assets/28580543/ff4349e1-0b56-4397-86af-087ad8d85a4f)
 
 ## Funcionalidades
 
